@@ -3,6 +3,11 @@
 //     ===== simple 3D cubes HTML5 engine ====
 // script written by Gerard Ferrandez - January 2, 2012
 // http://www.dhteumeuleu.com
+//
+// v1.1 Szentmiklósi László - January 17, 2023
+// http://slc.hu
+// https://github.com/SzentmiklosiLaszlo/KockaLeny
+// add: cube id, cube label, multi color cubes, load and save functions to JSON file with PHP
 // =============================================================
 
 "use strict";
@@ -26,6 +31,8 @@
     var autorotate = false,
         destroy = false,
         running = true;
+    var cubes_data = [];
+    var cube_search = '';
     // ---- fov ----
     var fl = 250;
     var zoom = 0;
@@ -141,24 +148,35 @@
             this.normal.projection();
             var light = (
                 this.normal.z
-            ) * 256;
-            var r = this.cube.r;
-            var g = light;
-            var b = this.cube.b;
+            ) * 1;
+            var r = light * this.cube.r;
+            var g = light * this.cube.g;
+            var b = light * this.cube.b;
         }
         // ---- fill ----
-        canvas.ctx.fillStyle = "rgba(" +
-            Math.round(r) + "," +
-            Math.round(g) + "," +
-            Math.round(b) + "," + 1 + ")";
+        // if (('' == cube_search) || (this.cube.cube_label.toLowerCase() == cube_search.toLowerCase())) {
+        if (('' == cube_search) || (-1 < this.cube.cube_label.toLowerCase().indexOf(cube_search.toLowerCase()))) {
+            canvas.ctx.fillStyle = "rgba(" +
+                Math.round(r) + "," +
+                Math.round(g) + "," +
+                Math.round(b) + "," + 1 + ")";
+
+        } else {
+            var r = g = b = light * 255;
+            canvas.ctx.fillStyle = "rgba(" +
+                Math.round(r) + "," +
+                Math.round(g) + "," +
+                Math.round(b) + "," + 0.2 + ")";
+        }
 
         canvas.ctx.fill();
     };
     // ======== Cube constructor ========
-    var Cube = function(parent, nx, ny, nz, x, y, z, w, r, g, b, cube_label) {
-        this.r = r;
-        this.g = g;
-        this.b = b;
+    var Cube = function(id, cube_label, r, g, b, parent, nx, ny, nz, x, y, z, w) {
+        this.id = parseInt(id, 10);
+        this.r = parseInt(r);
+        this.g = parseInt(g);
+        this.b = parseInt(b);
         this.cube_label = cube_label;
 
         if (parent) {
@@ -238,12 +256,27 @@
         ncube = 0;
         npoly = 0;
 
-        // 112.5 = -2.25 * faceOver.cube.w;
-        cubes.push(
-            new Cube(false, 0, 0, 0, 0, 0, 0, 50, 0, 255, 0, "RETROCREATIVE"),
-            new Cube(false, 0, 0, 0, 112.5, 0, 0, 50, 255, 0, 0, "Don_Daemon"),
-            new Cube(false, 0, 0, 0, 112.5, -112.5, 0, 50, 0, 0, 255, "AlmaFa")
-        );
+        fetch('./config/kockaleny.json')
+            .then((response) => response.json())
+            .then((data) => {
+                cubes_data = data;
+                let first_element = true;
+                data.forEach(e => {
+                    if (first_element) {
+                        cubes.push(
+                            new Cube(e[0], e[1], e[2], e[3], e[4], false, 0, 0, 0, 0, 0, 0, 50)
+                        );
+                        first_element = false;
+                    } else {
+                        cubes.push(
+                            new Cube(e[0], e[1], e[2], e[3], e[4], e[5], e[6], e[7], e[8], e[9], e[10], e[11], e[12])
+                        );
+                    }
+                    detectFaceOver();
+                });
+            }).catch((error) => {
+                document.getElementById("cube_label_error").innerHTML = 'Hiba: Sikertelen betöltés! ' + error;
+            });
     };
     var detectFaceOver = function() {
         // ---- detect pointer over face ----
@@ -260,6 +293,7 @@
     };
     var click = function() {
         document.getElementById("cube_label_error").innerHTML = '';
+        document.getElementById("cube_label_success").innerHTML = '';
         // ---- click cube ----
         detectFaceOver();
         if (faceOver) {
@@ -286,6 +320,16 @@
                             break;
                         }
                     }
+                    // ---- destroy cubes_data ----
+                    var i = 0,
+                        o;
+                    while (o = cubes_data[i++]) {
+                        console.info(o[0], c.id);
+                        if (o[0] == c.id) {
+                            cubes_data.splice(--i, 1);
+                            break;
+                        }
+                    }
                 }
             } else {
                 if (faceOver.clicked) {
@@ -304,42 +348,60 @@
                     }
                 }
 
-                // ---- create new cube ----
+                var keys = Object.keys(cubes);
+                var ids = keys.map(function(v) { return cubes[v].id; });
+                var empty_id = -1;
+                while (-1 < ids.indexOf(++empty_id)) {};
+
                 faceOver.clicked = true;
                 var w = -2.25 * faceOver.cube.w;
-                cubes.push(
-                    new Cube(
-                        faceOver.cube,
-                        w * faceOver.normal.xo,
-                        w * faceOver.normal.yo,
-                        w * faceOver.normal.zo,
-                        0,
-                        0,
-                        0,
-                        50,
-                        parseInt(document.getElementById("red").innerHTML, 10) || 0,
-                        parseInt(document.getElementById("green").innerHTML, 10) || 0,
-                        parseInt(document.getElementById("blue").innerHTML, 10) || 0,
-                        document.getElementById("cube_label").value
-                    )
-                );
 
-                console.log(
-                    false,
-                    w * faceOver.normal.xo,
-                    w * faceOver.normal.yo,
-                    w * faceOver.normal.zo,
-                    0,
-                    0,
-                    0,
-                    50,
+                var e = [
+                    empty_id,
+                    document.getElementById("cube_label").value,
                     parseInt(document.getElementById("red").innerHTML, 10) || 0,
                     parseInt(document.getElementById("green").innerHTML, 10) || 0,
                     parseInt(document.getElementById("blue").innerHTML, 10) || 0,
-                    document.getElementById("cube_label").value
+                    false,
+                    0, 0, 0,
+                    w * faceOver.normal.xo,
+                    w * faceOver.normal.yo,
+                    w * faceOver.normal.zo,
+                    50
+                ];
+                console.log(e);
+
+                cubes_data.push(e);
+
+                // ---- create new cube ----
+                cubes.push(
+                    new Cube(e[0], e[1], e[2], e[3], e[4], faceOver.cube, e[9], e[10], e[11])
                 );
 
                 detectFaceOver();
+
+                console.info(faces);
+                console.log(cubes);
+
+                // ---- save new cube ----
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                        if (this.status == 200) {
+                            if (this.response.success) {
+                                document.getElementById("cube_label_success").innerHTML = 'Sikeres mentés!';
+                            } else {
+                                document.getElementById("cube_label_error").innerHTML = 'Hiba: Sikertelen mentés!';
+                            }
+                        } else {
+                            document.getElementById("cube_label_error").innerHTML = 'Hiba: Sikertelen mentés!';
+                        }
+                    }
+                };
+                xmlhttp.open("POST", "saver_xZMYPMv0AjUpEpzR.php", true);
+                xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+                xmlhttp.responseType = 'json';
+                xmlhttp.send('json=' + JSON.stringify(cubes_data));
             }
         }
     };
@@ -428,9 +490,14 @@
                 autorotate = this.checked;
             }
             document.getElementById("destroy").onchange = function() {
-                    destroy = this.checked;
-                }
-                // ---- engine start ----
+                destroy = this.checked;
+            }
+            document.getElementById("cube_search").onkeyup = function() {
+                cube_search = this.value;
+                detectFaceOver();
+            }
+
+            // ---- engine start ----
             reset();
             run();
         }

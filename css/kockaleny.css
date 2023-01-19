@@ -64,8 +64,14 @@ body {
     visibility: hidden;
 }
 
-.bold_red {
+#cube_label_error {
     color: red;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#cube_label_success {
+    color: lime;
     font-size: 18px;
     font-weight: bold;
 }
