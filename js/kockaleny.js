@@ -174,10 +174,15 @@
     // ======== Cube constructor ========
     var Cube = function(id, cube_label, r, g, b, parent, nx, ny, nz, x, y, z, w) {
         this.id = parseInt(id, 10);
+        this.cube_label = cube_label;
         this.r = parseInt(r);
         this.g = parseInt(g);
         this.b = parseInt(b);
-        this.cube_label = cube_label;
+        this.coordinate = {
+            x: 0,
+            y: 0,
+            z: 0
+        };
 
         if (parent) {
             // ---- translate parent points ----
@@ -185,7 +190,11 @@
             this.points = [];
             var i = 0,
                 p;
+
             while (p = parent.points[i++]) {
+                this.coordinate.x += p.xo;
+                this.coordinate.y += p.yo;
+                this.coordinate.z += p.zo;
                 this.points.push(
                     new Point(
                         parent, [p.xo + nx, p.yo + ny, p.zo + nz],
@@ -193,6 +202,9 @@
                     )
                 );
             }
+            this.coordinate.x = this.coordinate.x / parent.points.length;
+            this.coordinate.y = this.coordinate.y / parent.points.length;
+            this.coordinate.z = this.coordinate.z / parent.points.length;
         } else {
             // ---- create points ----
             this.w = w;
@@ -256,7 +268,7 @@
         ncube = 0;
         npoly = 0;
 
-        fetch('./config/kockaleny.json')
+        fetch('./config/kockaleny.json?ts=' + Date.now())
             .then((response) => response.json())
             .then((data) => {
                 cubes_data = data;
@@ -291,6 +303,26 @@
             } else break;
         }
     };
+    var save_cubes = function(data) {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4) {
+                if (this.status == 200) {
+                    if (this.response.success) {
+                        document.getElementById("cube_label_success").innerHTML = 'Sikeres mentés!';
+                    } else {
+                        document.getElementById("cube_label_error").innerHTML = 'Hiba: Sikertelen mentés!';
+                    }
+                } else {
+                    document.getElementById("cube_label_error").innerHTML = 'Hiba: Sikertelen mentés!';
+                }
+            }
+        };
+        xmlhttp.open("POST", "saver_xZMYPMv0AjUpEpzR.php", true);
+        xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+        xmlhttp.responseType = 'json';
+        xmlhttp.send('json=' + JSON.stringify(data));
+    };
     var click = function() {
         document.getElementById("cube_label_error").innerHTML = '';
         document.getElementById("cube_label_success").innerHTML = '';
@@ -324,7 +356,6 @@
                     var i = 0,
                         o;
                     while (o = cubes_data[i++]) {
-                        console.info(o[0], c.id);
                         if (o[0] == c.id) {
                             cubes_data.splice(--i, 1);
                             break;
@@ -337,14 +368,16 @@
                 }
 
                 if ('' == document.getElementById("cube_label").value) {
-                    document.getElementById("cube_label_error").innerHTML = 'Hiba: A kocka felírata nem lehet üres!';
+                    document.getElementById("cube_label_error").innerHTML = 'Hiba: A kocka felirata nem lehet üres!';
                     return;
                 }
 
-                for (let i = 0; i < cubes.length; i++) {
-                    if (cubes[i].cube_label.toLowerCase() == document.getElementById("cube_label").value.toLowerCase()) {
-                        document.getElementById("cube_label_error").innerHTML = 'Hiba: Ilyen kocka felírat már van!';
-                        return;
+                if ('' == document.getElementById("cube_label_same").checked) {
+                    for (let i = 0; i < cubes.length; i++) {
+                        if (cubes[i].cube_label.toLowerCase() == document.getElementById("cube_label").value.toLowerCase()) {
+                            document.getElementById("cube_label_error").innerHTML = 'Hiba: Ilyen kocka felirat már van!';
+                            return;
+                        }
                     }
                 }
 
@@ -369,40 +402,20 @@
                     w * faceOver.normal.zo,
                     50
                 ];
-                console.log(e);
-
-                cubes_data.push(e);
 
                 // ---- create new cube ----
-                cubes.push(
-                    new Cube(e[0], e[1], e[2], e[3], e[4], faceOver.cube, e[9], e[10], e[11])
-                );
+                var last_cube = new Cube(e[0], e[1], e[2], e[3], e[4], faceOver.cube, e[9], e[10], e[11]);
+                cubes.push(last_cube);
 
                 detectFaceOver();
 
-                console.info(faces);
-                console.log(cubes);
+                e[9] += last_cube.coordinate.x;
+                e[10] += last_cube.coordinate.y;
+                e[11] += last_cube.coordinate.z;
 
-                // ---- save new cube ----
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState == 4) {
-                        if (this.status == 200) {
-                            if (this.response.success) {
-                                document.getElementById("cube_label_success").innerHTML = 'Sikeres mentés!';
-                            } else {
-                                document.getElementById("cube_label_error").innerHTML = 'Hiba: Sikertelen mentés!';
-                            }
-                        } else {
-                            document.getElementById("cube_label_error").innerHTML = 'Hiba: Sikertelen mentés!';
-                        }
-                    }
-                };
-                xmlhttp.open("POST", "saver_xZMYPMv0AjUpEpzR.php", true);
-                xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-                xmlhttp.responseType = 'json';
-                xmlhttp.send('json=' + JSON.stringify(cubes_data));
+                cubes_data.push(e);
             }
+            save_cubes(cubes_data);
         }
     };
     ////////////////////////////////////////////////////////////////////////////

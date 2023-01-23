@@ -20,7 +20,6 @@ if (0 < json_last_error()) {
 }
 
 $json_data = json_encode($check, JSON_PRETTY_PRINT);
-die(json_encode($output)); //DEBUG
 file_put_contents(CONFIG_FILE, $json_data);
 
 $output['success'] = true;
