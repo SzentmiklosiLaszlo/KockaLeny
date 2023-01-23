@@ -7,7 +7,7 @@
 // v1.1 Szentmiklósi László - January 17, 2023
 // http://slc.hu
 // https://github.com/SzentmiklosiLaszlo/KockaLeny
-// add: cube id, cube label, multi color cubes, load and save functions to JSON file with PHP
+// add: cube id, cube label, multi color cubes, load and save functions to JSON file with PHP, search function: color and B&W style, same cube labels
 // =============================================================
 
 "use strict";
