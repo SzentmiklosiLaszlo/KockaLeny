@@ -310,6 +310,15 @@
                 if (this.status == 200) {
                     if (this.response.success) {
                         document.getElementById("cube_label_success").innerHTML = 'Sikeres mentés!';
+
+                        if (destroy) {
+                            destroy = false;
+                            document.getElementById("destroy").checked = false;
+                            // ---- engine start ----
+                            reset();
+                            run();
+                        }
+
                     } else {
                         document.getElementById("cube_label_error").innerHTML = 'Hiba: Sikertelen mentés!';
                     }
@@ -362,6 +371,7 @@
                         }
                     }
                 }
+
             } else {
                 if (faceOver.clicked) {
                     return;
@@ -414,6 +424,7 @@
                 e[11] += last_cube.coordinate.z;
 
                 cubes_data.push(e);
+
             }
             save_cubes(cubes_data);
         }

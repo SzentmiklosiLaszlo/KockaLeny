@@ -27,8 +27,8 @@
         angleX = 0,
         angleZ = 0;
     var bkgColor = "rgba(0,0,0,0.1)";
-    var autorotate = false,
-        destroy = false,
+    var autorotate = true,
+        noname = false,
         running = true;
     var cubes_data = [];
     var cube_search = '';
@@ -130,11 +130,13 @@
         canvas.ctx.lineTo(this.p2.X, this.p2.Y);
         canvas.ctx.lineTo(this.p3.X, this.p3.Y);
 
-        // ---- label ----
-        // canvas.ctx.textAlign = "center";
-        canvas.ctx.textBaseline = "bottom";
-        canvas.ctx.font = '16px Arial Black';
-        canvas.ctx.fillText(this.cube.cube_label, this.p0.X, this.p0.Y);
+        if (!noname) {
+            // ---- label ----
+            // canvas.ctx.textAlign = "center";
+            canvas.ctx.textBaseline = "bottom";
+            canvas.ctx.font = '16px Arial Black';
+            canvas.ctx.fillText(this.cube.cube_label, this.p0.X, this.p0.Y);
+        }
         canvas.ctx.closePath();
 
         // ---- light ----
@@ -384,6 +386,9 @@
             // ---- some UI options ----
             document.getElementById("autorotate").onchange = function() {
                 autorotate = this.checked;
+            }
+            document.getElementById("noname").onchange = function() {
+                noname = this.checked;
             }
             document.getElementById("cube_search").onkeyup = function() {
                 cube_search = this.value;
