@@ -51,6 +51,7 @@ Fontos: A kockaleny.json -nak legalább egy kockát kell tartalmaznia.
 ## Konfigurációs állomány (kockaleny.json)
 
 A **0. kocka** így néz ki:
+```
 [
 	0, <------------------------- ID, **egyedi azonosító szám**. Értéke minimum 0 és pozitív egész szám lehet.
 	"Don Daemon", <-------------- LABEL, **kocka címkéje**. Lehet "" üres szöveg is. A maximális hosszúságát majd kitapasztalod, nincs korlátozva, ahogy jól néz ki a kockahalmazod.
@@ -66,8 +67,9 @@ A **0. kocka** így néz ki:
 	0, <------------------------- Z koordináta, 112.5 egész számú többszöröse, mely lehet negatív szám is. Tizedes pont van. Pl.: 112.5, 225, 337.5, -112.5, -225, -337.5...
 	50
 ]
+```
 
-(50 * 2.25 = 112.5)
+Miért pont 112.5? (50 * 2.25 = 112.5)
 
 Egyszerű szövegszerkesztővel módosítható. Ha kézzel szerkeszted és valami hiba lép fel, javaslok ellenőrzésre egy **Online JSON validator** -t.
 
@@ -99,4 +101,4 @@ SOFTWARE.
 
 A felhasznált forrásfájlok fejléce változtatás nélkül tartalmazzák a szerzői- és egyéb jogi információkat.
 
-## That's all Folks!
+###### That's all Folks!
