@@ -14,6 +14,7 @@
 </head>
 
 <body>
+    <input id="color_array" type="hidden" value="[#111111, #5b2c0c, #8e0000, #811a74, #131b85, #02acd1, #008603, #d3bd00, #dedede, #222222, #ab4400, #824ca7, #e463e6, #00dab9, #7ac700, #d6cc76]" />
     <div id="screen">
         <div id="header">
             Kockalény
@@ -30,40 +31,12 @@
                 <label for="cube_label">Új kocka felirata: </label><input type="text" id="cube_label"><br>
                 <label for="cube_label_error" id="cube_label_error"></label><br>
                 <label for="cube_label_success" id="cube_label_success"></label><br>
-
-                <div id='selectedhexagon' style='visibility:hidden;position:relative;width:21px;height:21px;background-image:url("images/selectedcolor.gif")'></div>
+                <div id="colors"></div>
+                <input type="hidden" id="red" value="0" />
+                <input type="hidden" id="green" value="255" />
+                <input type="hidden" id="blue" value="0" />
                 <div id='divpreview'>&nbsp;</div>
-
-                <div class="row">
-                    <div class="cell" style="background-color: #111111" onclick='clickColor("#111111",10000,10000)' onmouseover='mouseOverColor("#111111")'>&nbsp;</div>
-                    <div class="cell" style="background-color: #5b2c0c" onclick='clickColor("#5b2c0c",10000,10000)' onmouseover='mouseOverColor("#5b2c0c")'>&nbsp;</div>
-                    <div class="cell" style="background-color: #8e0000" onclick='clickColor("#8e0000",10000,10000)' onmouseover='mouseOverColor("#8e0000")'>&nbsp;</div>
-                    <div class="cell" style="background-color: #811a74" onclick='clickColor("#811a74",10000,10000)' onmouseover='mouseOverColor("#811a74")'>&nbsp;</div>
-                </div>
-                <div class="row">
-                    <div class="cell" style="background-color: #131b85" onclick='clickColor("#131b85",10000,10000)' onmouseover='mouseOverColor("#131b85")'>&nbsp;</div>
-                    <div class="cell" style="background-color: #02acd1" onclick='clickColor("#02acd1",10000,10000)' onmouseover='mouseOverColor("#02acd1")'>&nbsp;</div>
-                    <div class="cell" style="background-color: #008603" onclick='clickColor("#008603",10000,10000)' onmouseover='mouseOverColor("#008603")'>&nbsp;</div>
-                    <div class="cell" style="background-color: #d3bd00" onclick='clickColor("#d3bd00",10000,10000)' onmouseover='mouseOverColor("#d3bd00")'>&nbsp;</div>
-                </div>
-                <div class="row">
-                    <div class="cell" style="background-color: #dedede" onclick='clickColor("#dedede",10000,10000)' onmouseover='mouseOverColor("#dedede")'>&nbsp;</div>
-                    <div class="cell" style="background-color: #222222" onclick='clickColor("#222222",10000,10000)' onmouseover='mouseOverColor("#222222")'>&nbsp;</div>
-                    <div class="cell" style="background-color: #ab4400" onclick='clickColor("#ab4400",10000,10000)' onmouseover='mouseOverColor("#ab4400")'>&nbsp;</div>
-                    <div class="cell" style="background-color: #824ca7" onclick='clickColor("#824ca7",10000,10000)' onmouseover='mouseOverColor("#824ca7")'>&nbsp;</div>
-                </div>
-                <div class="row">
-                    <div class="cell" style="background-color: #e463e6" onclick='clickColor("#e463e6",10000,10000)' onmouseover='mouseOverColor("#e463e6")'>&nbsp;</div>
-                    <div class="cell" style="background-color: #00dab9" onclick='clickColor("#00dab9",10000,10000)' onmouseover='mouseOverColor("#00dab9")'>&nbsp;</div>
-                    <div class="cell" style="background-color: #7ac700" onclick='clickColor("#7ac700",10000,10000)' onmouseover='mouseOverColor("#7ac700")'>&nbsp;</div>
-                    <div class="cell" style="background-color: #d6cc76;" onclick='clickColor("#d6cc76",10000,10000)' onmouseover='mouseOverColor("#d6cc76")'>&nbsp;</div>
-                </div>
-
                 <div id="colorrgbDIV"></div>
-                <div id="red" class="checkbox">0</div>
-                <div id="green" class="checkbox">255</div>
-                <div id="blue" class="checkbox">0</div>
-
             </div>
         </div>
         <div id="footer">

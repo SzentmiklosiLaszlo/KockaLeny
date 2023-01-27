@@ -250,6 +250,25 @@
         ncube++;
     };
     ////////////////////////////////////////////////////////////////////////////
+    var toHex = function(n) {
+        var hex = n.toString(16);
+        while (hex.length < 2) { hex = "0" + hex; }
+        return hex;
+    }
+    var validColor = function(n) {
+        var re = /^[+]?[0-9]+$/;
+        if (!n.match(re)) {
+            return false;
+        }
+        n = parseInt(n, 10) || 0;
+        return (0 <= n) && (n <= 255);
+    }
+    var changePreviewColor = function() {
+        document.getElementById("divpreview").style.backgroundColor = 'rgba(' +
+            document.getElementById("red").value + ',' +
+            document.getElementById("green").value + ',' +
+            document.getElementById("blue").value + ', 1)';
+    }
     var resize = function() {
         // ---- screen resize ----
         nw = scr.offsetWidth;
@@ -391,6 +410,19 @@
                     }
                 }
 
+                if (!validColor(document.getElementById("red").value)) {
+                    document.getElementById("cube_label_error").innerHTML = 'Hiba: Piros szín 0-255 lehet!';
+                    return;
+                }
+                if (!validColor(document.getElementById("green").value)) {
+                    document.getElementById("cube_label_error").innerHTML = 'Hiba: Zöld szín 0-255 lehet!';
+                    return;
+                }
+                if (!validColor(document.getElementById("blue").value)) {
+                    document.getElementById("cube_label_error").innerHTML = 'Hiba: Kék szín 0-255 lehet!';
+                    return;
+                }
+
                 var keys = Object.keys(cubes);
                 var ids = keys.map(function(v) { return cubes[v].id; });
                 var empty_id = -1;
@@ -402,9 +434,9 @@
                 var e = [
                     empty_id,
                     document.getElementById("cube_label").value,
-                    parseInt(document.getElementById("red").innerHTML, 10) || 0,
-                    parseInt(document.getElementById("green").innerHTML, 10) || 0,
-                    parseInt(document.getElementById("blue").innerHTML, 10) || 0,
+                    parseInt(document.getElementById("red").value, 10) || 0,
+                    parseInt(document.getElementById("green").value, 10) || 0,
+                    parseInt(document.getElementById("blue").value, 10) || 0,
                     false,
                     0, 0, 0,
                     w * faceOver.normal.xo,
@@ -428,6 +460,27 @@
             }
             save_cubes(cubes_data);
         }
+    };
+    ////////////////////////////////////////////////////////////////////////////
+    var fill_color_boxes = function() {
+        if (document.getElementById("color_array")) {
+            var colors = document.getElementById("color_array").value;
+            colors = colors.replaceAll(' ', '').replaceAll('[', '').replaceAll(']', '');
+            var color_arr = colors.split(',');
+
+            var data = '';
+            for (let i = 0; i < color_arr.length; i++) {
+                if (i % 4 == 0) {
+                    data += '<div class="row">\n';
+                }
+                data += "<div id=\"colors_" + i + "\" class=\"cell\" style=\"background-color: " + color_arr[i] + "\" onclick='clickColor(\"" + color_arr[i] + "\"," + i + ",10000)' onmouseover='mouseOverColor(\"" + color_arr[i] + "\")'>&nbsp;</div>\n";
+                if (i % 4 == 3) {
+                    data += "</div>\n\n";
+                }
+            };
+            document.getElementById("colors").innerHTML = data;
+        }
+        return;
     };
     ////////////////////////////////////////////////////////////////////////////
     var init = function() {
@@ -520,8 +573,33 @@
                 cube_search = this.value;
                 detectFaceOver();
             }
+            document.getElementById("red").onkeyup = function() {
+                document.getElementById("red").style.border = 'none';
+                if (!validColor(document.getElementById("red").value)) {
+                    document.getElementById("red").style.border = '2px solid red';
+                    return;
+                }
+                changePreviewColor();
+            }
+            document.getElementById("green").onkeyup = function() {
+                document.getElementById("green").style.border = 'none';
+                if (!validColor(document.getElementById("green").value)) {
+                    document.getElementById("green").style.border = '2px solid red';
+                    return;
+                }
+                changePreviewColor();
+            }
+            document.getElementById("blue").onkeyup = function() {
+                document.getElementById("blue").style.border = 'none';
+                if (!validColor(document.getElementById("blue").value)) {
+                    document.getElementById("blue").style.border = '2px solid red';
+                    return;
+                }
+                changePreviewColor();
+            }
 
             // ---- engine start ----
+            fill_color_boxes();
             reset();
             run();
         }

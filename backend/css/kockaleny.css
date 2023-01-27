@@ -86,10 +86,22 @@ body {
 }
 
 .cell {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     float: left;
     min-height: 50px;
     min-width: 30px;
-    width: 24%;
+    width: 22%;
     border: 1px solid black;
     text-align: center;
+}
+
+.actual_color {
+    width: 38px;
+    display: inline-block;
+}
+
+#egyedi_szin {
+    margin-top: 10px;
 }

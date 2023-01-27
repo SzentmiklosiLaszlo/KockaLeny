@@ -140,20 +140,15 @@
         canvas.ctx.closePath();
 
         // ---- light ----
-        if (this == faceOver) {
-            var r = 255;
-            var g = 0;
-            var b = 0;
-        } else {
-            // ---- flat (lambert) shading ----
-            this.normal.projection();
-            var light = (
-                this.normal.z
-            ) * 1;
-            var r = light * this.cube.r;
-            var g = light * this.cube.g;
-            var b = light * this.cube.b;
-        }
+        // ---- flat (lambert) shading ----
+        this.normal.projection();
+        var light = (
+            this.normal.z
+        ) * 1;
+        var r = light * this.cube.r;
+        var g = light * this.cube.g;
+        var b = light * this.cube.b;
+
         // ---- fill ----
         // if (('' == cube_search) || (this.cube.cube_label.toLowerCase() == cube_search.toLowerCase())) {
         if (('' == cube_search) || (-1 < this.cube.cube_label.toLowerCase().indexOf(cube_search.toLowerCase()))) {

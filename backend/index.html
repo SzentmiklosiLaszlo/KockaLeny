@@ -31,14 +31,15 @@
                 <label for="cube_label_error" id="cube_label_error"></label><br>
                 <label for="cube_label_success" id="cube_label_success"></label><br>
 
-                <img style="margin-top:20px;" src="images/colormap.gif" usemap="#colormap" alt="colormap">
+                <img src="images/colormap.gif" usemap="#colormap" alt="colormap">
 
                 <div id='selectedhexagon' style='visibility:hidden;position:relative;width:21px;height:21px;background-image:url("images/selectedcolor.gif")'></div>
                 <div id='divpreview'>&nbsp;</div>
-                <div id="colorrgbDIV"></div>
-                <div id="red" class="checkbox">0</div>
-                <div id="green" class="checkbox">255</div>
-                <div id="blue" class="checkbox">0</div>
+                <div id="egyedi_szin">Egyedi szín:
+                    <input type="text" id="red" class="actual_color" value="0" />
+                    <input type="text" id="green" class="actual_color" value="255" />
+                    <input type="text" id="blue" class="actual_color" value="0" />
+                </div><br>
 
                 <map id="colormap" name="colormap" onmouseout="mouseOutMap()">
                     <area style="cursor:pointer" shape="poly" coords="63,0,72,4,72,15,63,19,54,15,54,4" onclick='clickColor("#003366",-200,54)' onmouseover='mouseOverColor("#003366")' alt="#003366">
@@ -169,7 +170,7 @@
                     <area style="cursor:pointer" shape="poly" coords="153,180,162,184,162,195,153,199,144,195,144,184" onclick='clickColor("#800000",-20,144)' onmouseover='mouseOverColor("#800000")' alt="#800000">
                     <area style="cursor:pointer" shape="poly" coords="171,180,180,184,180,195,171,199,162,195,162,184" onclick='clickColor("#993333",-20,162)' onmouseover='mouseOverColor("#993333")' alt="#993333">
                 </map>
-
+                <div id="colorrgbDIV"></div>
             </div>
         </div>
         <div id="footer">
