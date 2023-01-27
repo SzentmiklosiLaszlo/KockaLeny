@@ -26,7 +26,7 @@ copy kockaleny.json.sample kockaleny.json
 
 Fontos: A kockaleny.json -nak legalább egy kockát kell tartalmaznia. Javaslom: a 0. számú kockát tartsd meg és kereszteld át saját névre.
 
-4. Indítsd el az index.html vagy index16.html fájlokkal a szervereden. Az **index.html** sokszínű és egyedi szín is kikeverhesz, a **index16.html** csak 16 színű. Lehet használni felváltva a két szerkesztőfelületet. 16 millió színnel dolgozik a program.
+4. Indítsd el az index.html vagy index16.html fájlokat a szervereden. Az **index.html** sokszínű és egyedi szín is kikeverhesz, a **index16.html** csak 16 színű. Lehet használni felváltva a két szerkesztőfelületet. 16 millió színnel dolgozik a program.
 
 5. Elindult a program? Ha nem, akkor térj vissza az 1. lépésre és ellenőrizd, hogy mindemt jól csináltál-e?
 6. Gratulálok, sikeres a telepítés
@@ -101,4 +101,4 @@ SOFTWARE.
 
 A felhasznált forrásfájlok fejléce változtatás nélkül tartalmazzák a szerzői- és egyéb jogi információkat.
 
-###### That's all Folks!
+### That's all Folks!
