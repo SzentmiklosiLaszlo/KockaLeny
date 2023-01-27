@@ -27,7 +27,7 @@
         angleX = 0,
         angleZ = 0;
     var bkgColor = "rgba(0,0,0,0.1)";
-    var autorotate = true,
+    var autorotate = false,
         noname = false,
         running = true;
     var cubes_data = [];
@@ -304,6 +304,8 @@
             // ---- init script ----
             scr = document.getElementById("screen");
             canvas = new Canvas("canvas");
+            autorotate = document.getElementById("autorotate").checked;
+            noname = document.getElementById("noname").checked;
             // ======== unified touch/mouse events handler ========
             scr.ontouchstart = scr.onmousedown = function(e) {
                 if (!running) return true;
