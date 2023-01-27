@@ -1,12 +1,13 @@
 ** KockaLény **
 
-Ezt a programot RETROCREATIVE cstornának írtam.
+Ezt a programot RETROCREATIVE csatornának készítettem. Sajnos egyéb munkáim miatt csak minimális időráfordítással, de annál jobb szívvel.
 
 https://www.twitch.tv/retrocreative
+https://retrocreative.hu/kockaleny/
 
 ---
 
-## Minta elérhetősége
+## Online DEMO
 
 1. [Kezdőlap](http://slc.hu/kockaleny/)
 2. [Látogatói felület](http://slc.hu/kockaleny/frontend/)
@@ -47,6 +48,31 @@ Fontos: A kockaleny.json -nak legalább egy kockát kell tartalmaznia.
 
 ---
 
+## Konfigurációs állomány (kockaleny.json)
+
+A **0. kocka** így néz ki:
+[
+	0, <------------------------- ID, **egyedi azonosító szám**. Értéke minimum 0 és pozitív egész szám lehet.
+	"Don Daemon", <-------------- LABEL, **kocka címkéje**. Lehet "" üres szöveg is. A maximális hosszúságát majd kitapasztalod, nincs korlátozva, ahogy jól néz ki a kockahalmazod.
+	0, <------------------------- RED, **vörös szín kódja** az RGB palettán, 0-255 egész szám lehet az értéke
+	255, <----------------------- GREEN, **zöld szín kódja** az RGB palettán, 0-255 egész szám lehet az értéke
+	0, <------------------------- BLUE, **kék szín kódja** az RGB palettán, 0-255 egész szám lehet az értéke
+	false,
+	0,
+	0,
+	0,
+	0, <------------------------- X koordináta, 112.5 egész számú többszöröse, mely lehet negatív szám is. Tizedes pont van. Pl.: 112.5, 225, 337.5, -112.5, -225, -337.5...
+	0, <------------------------- Y koordináta, 112.5 egész számú többszöröse, mely lehet negatív szám is. Tizedes pont van. Pl.: 112.5, 225, 337.5, -112.5, -225, -337.5...
+	0, <------------------------- Z koordináta, 112.5 egész számú többszöröse, mely lehet negatív szám is. Tizedes pont van. Pl.: 112.5, 225, 337.5, -112.5, -225, -337.5...
+	50
+]
+
+(50 * 2.25 = 112.5)
+
+Egyszerű szövegszerkesztővel módosítható. Ha kézzel szerkeszted és valami hiba lép fel, javaslok ellenőrzésre egy **Online JSON validator** -t.
+
+UTF-8 karakterhalmaz használható.
+
 ## MIT License
 
 Copyright (c) 2023 Szentmiklósi László (SLC)
@@ -68,3 +94,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## Kiegészítő szerzői- és egyéb jogi megjegyzés
+
+A felhasznált forrásfájlok fejléce változtatás nélkül tartalmazzák a szerzői- és egyéb jogi információkat.
+
+## That's all Folks!
