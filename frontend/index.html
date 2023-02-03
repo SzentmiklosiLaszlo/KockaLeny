@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 
 <head>
     <meta charset="UTF-8">
@@ -8,21 +8,23 @@
     <meta name="copyright" content="(C) 2023 Szentmiklósi László (SLC)">
     <meta name="license" content="MIT">
     <meta name="github" content="https://github.com/SzentmiklosiLaszlo/KockaLeny">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7, user-scalable=0">
     <link rel="stylesheet" href="css/kockaleny.css">
 </head>
 
 <body>
-    <div id="screen">
-        <canvas id="canvas">alma&nbsp;</canvas>
-        <div id="info">
-            <div class="content">
-                <input type="checkbox" id="autorotate" checked><label for="autorotate"> Automata forgatás</label><br>
-                <br>
-                <input type="checkbox" id="noname"><label for="noname"> Nevek elrejtése</label><br>
-                <br>
-                <label for="cube_label">Keresés: </label><input type="text" id="cube_search"><br>
-            </div>
+    <div id="info">
+        <div class="content">
+            <input type="checkbox" id="autorotate" checked><label for="autorotate"> Automata forgatás</label><br>
+            <br>
+            <input type="checkbox" id="noname"><label for="noname"> Nevek elrejtése</label><br>
+            <br>
+            <label for="cube_label">Keresés: </label><input type="text" id="cube_search"><br>
         </div>
+    </div>
+
+    <div id="screen">
+        <canvas id="canvas">&nbsp;</canvas>
     </div>
 
     <script src="js/kockaleny.js"></script>
