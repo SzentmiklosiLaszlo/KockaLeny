@@ -3,7 +3,8 @@
 Ezt a programot RETROCREATIVE csatornának készítettem. Sajnos egyéb munkáim miatt csak minimális időráfordítással, de annál jobb szívvel.
 
 https://www.twitch.tv/retrocreative
-https://retrocreative.hu/kockaleny/
+
+https://retrocreative.hu/kockaleny
 
 ---
 
