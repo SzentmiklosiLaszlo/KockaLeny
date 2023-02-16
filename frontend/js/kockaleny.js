@@ -132,10 +132,13 @@
 
         if (!noname) {
             // ---- label ----
-            // canvas.ctx.textAlign = "center";
-            canvas.ctx.textBaseline = "bottom";
-            canvas.ctx.font = '16px Arial Black';
-            canvas.ctx.fillText(this.cube.cube_label, this.p0.X, this.p0.Y);
+            // if (('' == cube_search) || (this.cube.cube_label.toLowerCase() == cube_search.toLowerCase())) {
+            if (('' == cube_search) || (-1 < this.cube.cube_label.toLowerCase().indexOf(cube_search.toLowerCase()))) {
+                // canvas.ctx.textAlign = "center";
+                canvas.ctx.textBaseline = "bottom";
+                canvas.ctx.font = '16px Arial Black';
+                canvas.ctx.fillText(this.cube.cube_label, this.p0.X, this.p0.Y);
+            }
         }
         canvas.ctx.closePath();
 

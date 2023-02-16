@@ -65,15 +65,18 @@ A **0. kocka** így néz ki:
 	0, <------------------------- X koordináta, 112.5 egész számú többszöröse, mely lehet negatív szám is. Tizedes pont van. Pl.: 112.5, 225, 337.5, -112.5, -225, -337.5...
 	0, <------------------------- Y koordináta, 112.5 egész számú többszöröse, mely lehet negatív szám is. Tizedes pont van. Pl.: 112.5, 225, 337.5, -112.5, -225, -337.5...
 	0, <------------------------- Z koordináta, 112.5 egész számú többszöröse, mely lehet negatív szám is. Tizedes pont van. Pl.: 112.5, 225, 337.5, -112.5, -225, -337.5...
-	50
+	50 <------------------------- Kocka oldalhossz. (56.25 -nél pont összeérnek a kockák. Ennél kisebb értéknél van köztük távolság. Nagyobb értéknél egymásba érnek.)
 ]
 ```
 
 Miért pont 112.5? (50 * 2.25 = 112.5)
+Miért pont 56.25? (112.5 fele, 50 * 2.25 / 2 = 56.25)
 
 Egyszerű szövegszerkesztővel módosítható. Ha kézzel szerkeszted és valami hiba lép fel, javaslok ellenőrzésre egy **Online JSON validator** -t.
 
-UTF-8 karakterhalmaz használható.
+UTF-16 karakterhalmaz használható.
+
+RGB színkód miatt akár 16 millió (16777216) szín használható.
 
 ## MIT License
 
